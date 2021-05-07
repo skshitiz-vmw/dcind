@@ -1,6 +1,7 @@
 # dcind (Docker-Compose-in-Docker) For Concourse
 
-![build status](https://ci.concourse-ci.org/api/v1/teams/tay/pipelines/dcind/jobs/build-and-publish/badge)
+* ![build status](https://ci.concourse-ci.org/api/v1/teams/tay/pipelines/dcind/jobs/build-and-publish/badge)
+* [See the pipeline](https://ci.concourse-ci.org/teams/tay/pipelines/dcind)
 
 Alpine based image that lets you run Docker inside a Concourse task. Task must have `privileged: true` for Docker to start.
 
@@ -32,9 +33,17 @@ jobs:
     privileged: true
 ```
 
+Run it locally on your machine:
+```
+$ docker run -it --privileged taylorsilva/dcind
+Starting Docker...
+waiting for docker to come up...
+bash-5.1#
+```
+
 ## Tags
 The Docker version is used to tag releases of the image. A new image is
-published everyday to ensure OS packages to up to date.
+published everyday to ensure OS packages are up to date.
 
 There are three kinds of tags being published, two rolling and one static.
 
@@ -43,7 +52,7 @@ Rolling Tags:
 - `DOCKER_VERSION`: This tag is the docker version (e.g. `20.10.6`) and is republished daily. Only the latest version of docker is republished. Older versions will become stale.
 
 Static Tag:
-- `DOCKER_VERSION-YYYYmmdd`: This tag is the docker version and is republished daily. Only the latest version of docker is republished.
+- `DOCKER_VERSION-YYYYmmdd`: This tag is the docker version plus the date it was published. If you want to stay on a specific version of Docker + Docker-Compose then sticking to a particular daily build will meet your needs.
 
 ## Example
 
