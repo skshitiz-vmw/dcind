@@ -42,6 +42,15 @@ resources:
   source:
     interval: 24h
 
+- name: dcind
+  icon: docker
+  type: registry-image
+  source:
+    repository: taylorsilva/dcind
+    tag: latest
+    username: ((docker.username))
+    password: ((docker.password))
+
 jobs:
 - name: update-self
   plan:
@@ -88,3 +97,7 @@ jobs:
       - name: image
       run:
         path: build
+  - put: dcind
+    params:
+      image: image/image.tar
+      bump_aliases: true
