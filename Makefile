@@ -1,0 +1,8 @@
+DOCKER_VERSION = 20.10.6
+DOCKER_COMPOSE_VERSION = 1.29.1
+
+build:
+	docker build -t dcind \
+		--build-arg DOCKER_VERSION=${DOCKER_VERSION} \
+		--build-arg DOCKER_COMPOSE_VERSION=${DOCKER_COMPOSE_VERSION} \
+		.
