@@ -97,7 +97,25 @@ jobs:
       - name: image
       run:
         path: build
+  - task: tags
+    params:
+      DOCKER_VERSION: ((.:docker-version))
+    config:
+      platform: linux
+      image_resource:
+        type: mock
+        source:
+          mirror_self: true
+      outputs:
+      - name: tags
+      run:
+        path: sh
+        args:
+          - -c
+          - |
+            echo "${DOCKER_VERSION} ${DOCKER_VERSION}-$(date +%Y%m%d)" > tags/tags
   - put: dcind
+    inputs: detect
     params:
       image: image/image.tar
-      bump_aliases: true
+      additional_tags: tags/tags
