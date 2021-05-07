@@ -1,0 +1,90 @@
+# This pipeline publishes and keeps the dcind image up to date
+#
+
+resources:
+- name: docker-release
+  type: github-release
+  icon: docker
+  check_every: 24h
+  source:
+    owner: moby
+    repository: moby
+    access_token: ((github_access_token))
+
+- name: docker-compose-release
+  type: github-release
+  icon: docker
+  check_every: 24h
+  source:
+    owner: docker
+    repository: compose
+    access_token: ((github_access_token))
+
+- name: pipeline
+  type: git
+  icon: git
+  check_every: 1h
+  source:
+    uri: https://github.com/taylorsilva/dcind
+    paths: [pipeline.yml]
+
+- name: repo
+  type: git
+  icon: git
+  check_every: 1h
+  source:
+    uri: https://github.com/taylorsilva/dcind
+    ignore_paths: [pipeline.yml, README.md]
+
+- name: daily-rebuild
+  type: time
+  icon: clock
+  source:
+    interval: 24h
+
+jobs:
+- name: update-self
+  plan:
+  - get: pipeline
+    trigger: true
+  - set_pipeline: dcind
+    file: pipeline/pipeline.yml
+
+- name: build-and-publish
+  plan:
+  - in_parallel:
+    - get: docker-release
+      trigger: true
+      params:
+        globs: [none]
+    - get: docker-compose-release
+      trigger: true
+      params:
+        globs: [none]
+    - get: repo
+      trigger: true
+    - get: daily-rebuild
+      trigger: true
+  - in_parallel:
+    - load_var: docker-version
+      file: docker-release/version
+    - load_var: docker-compose-version
+      file: docker-compose-release/version
+  - task: build-image
+    privileged: true
+    params:
+      BUILD_ARG_DOCKER_VERSION: ((.:docker-version))
+      BUILD_ARG_DOCKER_COMPOSE_VERSION: ((.:docker-compose-version))
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: vito/oci-build-task
+      inputs:
+      - name: repo
+        path: .
+      outputs:
+      - name: image
+      run:
+        path: build
