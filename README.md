@@ -1,15 +1,56 @@
-# dcind (Docker-Compose-in-Docker)
+# dcind (Docker-Compose-in-Docker) For Concourse
 
+![build-status](https://ci.concourse-ci.org/api/v1/teams/tay/pipelines/dcind/jobs/build-and-publish/badge)
 
-### Versioning
+Alpine based image that lets you run Docker inside a Concourse task. Task must have `privileged: true` for Docker to start.
 
-This repository and corresponding images on Docker Hub follow the semantic versioning [rules](https://semver.org/). It is advised to not rely on the `latest` tag when using `amidos/dcind` image in your CI pipelines. Consider using a specific version, like `amidos/dcind:1`.
+## Usage
 
-### Usage
+Use it in a task config:
+```yaml
+image_resource:
+  type: registry-image
+  source:
+    repository: taylorsilva/dcind
+```
 
-Use this ```Dockerfile``` to build a base image for your integration tests in [Concourse CI](http://concourse.ci/). Alternatively, you can use a ready-to-use image from the Docker Hub: [amidos/dcind](https://hub.docker.com/r/amidos/dcind/). The image is Alpine based.
+Pull it in as a resource to use as a task image:
+```yaml
+resoures:
+- name: dcind
+  icon: docker
+  type: registry-image
+  source:
+    repository: taylorsilva/dcind
+    tag: latest
 
-Here is an example of a Concourse [job](https://concourse-ci.org/jobs.html) that uses ```amidos/dcind``` image to run a bunch of containers in a task, and then runs the integration test suite. You can find a full version of this example in the [```example```](example) directory.
+jobs:
+...
+  - get: dcind
+  - task: doing-things
+    image: dcind
+    privileged: true
+```
+
+## Tags
+The Docker version is used to tag releases of the image. A new image is
+published everyday to ensure OS packages to up to date.
+
+There are three kinds of tags being published, two rolling and one static.
+
+Rolling Tags:
+- `latest`: points to the latest image pushed which contains the latest versions of Docker and Docker-Compose
+- `DOCKER_VERSION`: This tag is the docker version (e.g. `20.10.6`) and is republished daily. Only the latest version of docker is republished. Older versions will become stale.
+
+Static Tag:
+- `DOCKER_VERSION-YYYYmmdd`: This tag is the docker version and is republished daily. Only the latest version of docker is republished.
+
+## Example
+
+Here is an example of a Concourse [job](https://concourse-ci.org/jobs.html)
+that uses `taylorsilva/dcind` image to run a bunch of containers in a task, and
+then runs the integration test suite. You can find a full version of this
+example in the [`example`](example) directory.
 
 Note that `docker-lib.sh` has bash dependencies, so it is important to use `bash` in your task.
 
@@ -40,7 +81,7 @@ Note that `docker-lib.sh` has bash dependencies, so it is important to use `bash
           run:
             path: bash
             args:
-              - -exc
+              - -cex
               - |
                 source /docker-lib.sh
                 start_docker
@@ -68,5 +109,3 @@ Note that `docker-lib.sh` has bash dependencies, so it is important to use `bash
                 docker volume rm $(docker volume ls -q)
 
 ```
-
-[i17]: https://github.com/meAmidos/dcind/issues/17
