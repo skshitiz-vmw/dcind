@@ -2,7 +2,7 @@
 
 Alpine based image that lets you run Docker inside a Concourse task. Task must have `privileged: true` for Docker to start.
 
-![build status](https://ci.concourse-ci.org/api/v1/teams/tay/pipelines/dcind/jobs/build-and-publish/badge) [Release Pipeline](https://ci.concourse-ci.org/teams/tay/pipelines/dcind)
+![build status](https://ci.taydev.net/api/v1/teams/main/pipelines/dcind/jobs/build-and-publish/badge) [Release Pipeline](https://ci.taydev.net/teams/main/pipelines/dcind)
 
 ## Usage
 
