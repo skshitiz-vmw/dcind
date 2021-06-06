@@ -5,7 +5,7 @@ resources:
 - name: docker-release
   type: github-release
   icon: docker
-  check_every: 24h
+  check_every: never
   source:
     owner: moby
     repository: moby
@@ -14,7 +14,7 @@ resources:
 - name: docker-compose-release
   type: github-release
   icon: docker
-  check_every: 24h
+  check_every: never
   source:
     owner: docker
     repository: compose
@@ -34,13 +34,15 @@ resources:
   check_every: 1h
   source:
     uri: https://github.com/taylorsilva/dcind
-    ignore_paths: [pipeline.yml, README.md]
+    ignore_paths: [pipeline.yml, README.md, example.yml]
 
 - name: daily-rebuild
   type: time
   icon: clock
   source:
     interval: 24h
+    start: 3:00 AM
+    stop: 3:30 AM
 
 - name: dcind
   icon: docker
@@ -63,11 +65,9 @@ jobs:
   plan:
   - in_parallel:
     - get: docker-release
-      trigger: true
       params:
         globs: [none]
     - get: docker-compose-release
-      trigger: true
       params:
         globs: [none]
     - get: repo
