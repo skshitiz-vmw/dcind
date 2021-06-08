@@ -40,7 +40,6 @@ resources:
   type: time
   icon: clock
   source:
-    interval: 24h
     start: 3:00 AM
     stop: 3:30 AM
 
