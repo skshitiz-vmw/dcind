@@ -53,12 +53,12 @@ resources:
     password: ((docker.password))
 
 jobs:
-- name: update-self
-  plan:
-  - get: pipeline
-    trigger: true
-  - set_pipeline: dcind
-    file: pipeline/pipeline.yml
+# - name: update-self
+#   plan:
+#   - get: pipeline
+#     trigger: true
+#   - set_pipeline: dcind
+#     file: pipeline/pipeline.yml
 
 - name: build-and-publish
   plan:
