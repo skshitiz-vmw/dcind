@@ -20,13 +20,13 @@ resources:
     repository: compose
     access_token: ((github_access_token))
 
-- name: pipeline
-  type: git
-  icon: git
-  check_every: 1h
-  source:
-    uri: https://github.com/taylorsilva/dcind
-    paths: [pipeline.yml]
+# - name: pipeline
+#   type: git
+#   icon: git
+#   check_every: 1h
+#   source:
+#     uri: https://github.com/taylorsilva/dcind
+#     paths: [pipeline.yml]
 
 - name: repo
   type: git
