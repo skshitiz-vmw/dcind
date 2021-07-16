@@ -70,10 +70,12 @@ Note that `docker-lib.sh` has bash dependencies, so it is important to use `bash
       params: {depth: 1}
       passed: [unit-tests]
       trigger: true
-    - get: redis
-      params: {save: true}
-    - get: busybox
-      params: {save: true}
+    - get: redis #a registry-image resource
+      params:
+        format: oci
+    - get: busybox #a registry-image resource
+      params:
+        format: oci
   - task: Run integration tests
     privileged: true
     config:
