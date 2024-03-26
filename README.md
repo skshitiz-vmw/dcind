@@ -1,6 +1,6 @@
 # dcind (Docker-Compose-in-Docker) For Concourse
 
-Alpine based image that lets you run Docker inside a Concourse task. Task must have `privileged: true` for Docker to start.
+Ubuntu based image that lets you run Docker inside a Concourse task. Task must have `privileged: true` for Docker to start.
 
 ![build status](https://ci.taydev.net/api/v1/teams/main/pipelines/dcind/jobs/build-and-publish/badge) [Release Pipeline](https://ci.taydev.net/teams/main/pipelines/dcind)
 
