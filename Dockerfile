@@ -25,15 +25,15 @@ RUN apt-get update && \
 
 # Install Docker
 RUN curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz | tar -xzC /tmp \
-    && mv /tmp/docker/* /usr/local/bin/ \
-    && chmod +x /usr/local/bin/docker* \
+    && mv /tmp/docker/* /bin/ \
+    && chmod +x /bin/docker* \
     && rm -rf /tmp/docker*
 
 RUN docker --version
 
 # Install Docker Compose
-RUN curl -L https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose \
-    && chmod +x /usr/local/bin/docker-compose
+RUN curl -L https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m) -o /bin/docker-compose \
+    && chmod +x /bin/docker-compose
 
 RUN docker-compose --version
 
