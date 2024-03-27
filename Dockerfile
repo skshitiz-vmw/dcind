@@ -1,10 +1,8 @@
 FROM ubuntu:18.04
 # ubuntu:jammy
 
-ARG DOCKER_VERSION=20.10.11
-#25.0.4
-ARG DOCKER_COMPOSE_VERSION=2.0.0
-#2.26.0
+ARG DOCKER_VERSION=25.0.4
+ARG DOCKER_COMPOSE_VERSION=2.26.0
 ARG NODE_VERSION=14
 
 # Install required packages
@@ -25,7 +23,7 @@ RUN curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-${D
 RUN docker --version
 
 # Install Docker Compose
-RUN curl -L https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m) -o /bin/docker-compose \
+RUN curl -L https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -o /bin/docker-compose \
     && chmod +x /bin/docker-compose
 
 RUN docker-compose --version
