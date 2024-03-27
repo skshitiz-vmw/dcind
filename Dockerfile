@@ -18,7 +18,6 @@ RUN apt-get update && \
     rustc \
     cargo \
     iptables \
-    iptables-persistent \
     iproute2 \
     nodejs \
     npm \
