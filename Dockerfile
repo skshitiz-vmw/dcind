@@ -1,37 +1,20 @@
 FROM ubuntu:18.04
 # ubuntu:jammy
 
-ARG DOCKER_VERSION=25.0.4
-ARG DOCKER_COMPOSE_VERSION=2.26.0
+ARG DOCKER_VERSION=20.10.11
+#25.0.4
+ARG DOCKER_COMPOSE_VERSION=2.0.0
+#2.26.0
+ARG NODE_VERSION=14
 
 # Install required packages
 RUN apt-get update && \
-    apt-get install -y \
-    curl \
-    ca-certificates \
-    libssl-dev \
-    libffi-dev \
-    python3 \
-    python3-pip \
-    python3-dev \
-    gcc \
-    make \
-    rustc \
-    cargo \
-    iptables \
-    iproute2 \
-    nodejs \
-    npm \
-    grub2-common \
-    grub-common \
-    kmod \
-    grub-pc \
-    && rm -rf /var/lib/apt/lists/*
+    apt-get install -y curl libffi-dev openssl gcc libc-dev make iptables util-linux sed grep coreutils iproute2 && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory systemd.unified_cgroup_hierarchy=0"/g' /etc/default/grub
-
-# RUN update-alternatives --install /usr/bin/iptables iptables /usr/sbin/iptables-nft 30
-# RUN update-alternatives  --set iptables /usr/sbin/iptables-legacy
+# Install Node.js
+RUN curl -sL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
+    apt-get install -y nodejs
 
 # Install Docker
 RUN curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz | tar -xzC /tmp \
