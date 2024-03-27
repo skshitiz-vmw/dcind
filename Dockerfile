@@ -18,13 +18,20 @@ RUN apt-get update && \
     rustc \
     cargo \
     iptables \
+    iptables-persistent \
     iproute2 \
     nodejs \
     npm \
+    grub2-common \
+    grub-common \
+    kmod \
     grub-pc \
     && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory systemd.unified_cgroup_hierarchy=0"/g' /etc/default/grub
+
+RUN update-alternatives --install /usr/bin/iptables iptables /usr/sbin/iptables-nft 30
+RUN update-alternatives  --set iptables /usr/sbin/iptables-legacy
 
 # Install Docker
 RUN curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz | tar -xzC /tmp \
