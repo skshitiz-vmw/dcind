@@ -21,7 +21,10 @@ RUN apt-get update && \
     iproute2 \
     nodejs \
     npm \
+    grub-pc \
     && rm -rf /var/lib/apt/lists/*
+
+RUN sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory systemd.unified_cgroup_hierarchy=0"/g' /etc/default/grub
 
 # Install Docker
 RUN curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz | tar -xzC /tmp \
