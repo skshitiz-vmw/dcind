@@ -7,7 +7,7 @@ ARG NODE_VERSION=14
 
 # Install required packages
 RUN apt-get update && \
-    apt-get install -y curl libffi-dev openssl gcc libc-dev make iptables util-linux sed grep coreutils iproute2 && \
+    apt-get install -y curl libffi-dev openssl gcc libc-dev make iptables util-linux sed grep coreutils iproute2 openjdk-11-jdk && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Node.js
