@@ -3,7 +3,7 @@ FROM ubuntu:18.04
 
 ARG DOCKER_VERSION=25.0.4
 ARG DOCKER_COMPOSE_VERSION=2.26.0
-ARG NODE_VERSION=18.x
+ARG NODE_VERSION=16.x
 
 # Install required packages
 RUN apt-get update && \
