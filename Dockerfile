@@ -1,9 +1,9 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 # ubuntu:jammy
 
 ARG DOCKER_VERSION=25.0.4
 ARG DOCKER_COMPOSE_VERSION=2.26.0
-ARG NODE_VERSION=16.x
+ARG NODE_VERSION=18.x
 
 # Install required packages
 RUN apt-get update && \
