@@ -28,14 +28,14 @@ RUN curl -L https://github.com/docker/compose/releases/download/v${DOCKER_COMPOS
 
 RUN docker-compose --version
 
-# Clean up
-RUN rm -rf /root/.cache
-
 # Install chrome for running jasmine tests while building jar
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list && \
     apt-get update && \
     apt-get install -y google-chrome-stable xvfb
+
+# Clean up
+RUN rm -rf /root/.cache
 
 # Include functions to start/stop docker daemon
 COPY docker-lib.sh /docker-lib.sh
