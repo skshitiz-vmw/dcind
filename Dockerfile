@@ -35,7 +35,7 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
     apt-get install -y google-chrome-stable xvfb
 
 # Clean up
-RUN rm -rf /root/.cache
+RUN rm -rf /root/.cache /tmp/*
 
 # Include functions to start/stop docker daemon
 COPY docker-lib.sh /docker-lib.sh
